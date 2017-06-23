@@ -542,6 +542,9 @@ public class ChipLayout extends ViewGroup implements View.OnClickListener {
         autoCompleteTextView.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
+                String item = autoCompleteTextView.getText().toString();
+                getAdapter().addAll(item);
+
                 int pos = chipLayout.indexOfChild(layout);
                 removeChipAt(pos);
             }
@@ -627,12 +630,15 @@ public class ChipLayout extends ViewGroup implements View.OnClickListener {
                 if(onItemClickListener != null){
                     onItemClickListener.onItemClick(arg0, arg1, arg2, arg3);
                 }
+
+                getAdapter().remove(autoCompleteTextView.getText().toString());
             }
         });
 
 
         if(val != null){
             autoCompleteTextView.setText(val);
+            autoCompleteTextView.setTextColor(Color.WHITE);
         }
         return layout;
     }
