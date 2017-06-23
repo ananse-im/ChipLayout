@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
@@ -59,6 +60,7 @@ public class ChipLayout extends ViewGroup implements View.OnClickListener {
     private ChipItemChangeListener chipItemChangeListener;
     private int dropDownWidth = 300;
     private TextWatcher focusedTextWatcher;
+    private Typeface typeface;
 
     public ChipLayout(Context context) {
         this(context, null);
@@ -117,6 +119,10 @@ public class ChipLayout extends ViewGroup implements View.OnClickListener {
         createNewChipLayout(null);
         setOnClickListener();
 
+    }
+
+    public void setTyface(Typeface typeface) {
+        this.typeface = typeface;
     }
 
     public interface ChipItemChangeListener{
@@ -470,6 +476,9 @@ public class ChipLayout extends ViewGroup implements View.OnClickListener {
         autoCompleteTextView.setPadding(10,0,10,10);
         autoCompleteTextView.setSingleLine(true);
 //        autoCompleteTextView.setTextColor(textColor);
+        if (typeface != null) {
+            autoCompleteTextView.setTypeface(typeface);
+        }
         autoCompleteTextView.setTextColor(Color.parseColor("#FF4A4A4A"));
         autoCompleteTextView.setHintTextColor(hintColor);
         autoCompleteTextView.setCursorVisible(true);
