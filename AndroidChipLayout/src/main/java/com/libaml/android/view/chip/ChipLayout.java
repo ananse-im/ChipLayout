@@ -469,7 +469,8 @@ public class ChipLayout extends ViewGroup implements View.OnClickListener {
         autoCompleteTextView.setHint(" ");
         autoCompleteTextView.setPadding(10,0,10,10);
         autoCompleteTextView.setSingleLine(true);
-        autoCompleteTextView.setTextColor(textColor);
+//        autoCompleteTextView.setTextColor(textColor);
+        autoCompleteTextView.setTextColor(Color.parseColor("#FF4A4A4A"));
         autoCompleteTextView.setHintTextColor(hintColor);
         autoCompleteTextView.setCursorVisible(true);
 
@@ -538,6 +539,13 @@ public class ChipLayout extends ViewGroup implements View.OnClickListener {
             layout.addView(autoCompleteTextView);
         }
 
+        autoCompleteTextView.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                int pos = chipLayout.indexOfChild(layout);
+                removeChipAt(pos);
+            }
+        });
 
         Drawable newDrawable = null;
         if(chipDrawable != null){
@@ -547,10 +555,13 @@ public class ChipLayout extends ViewGroup implements View.OnClickListener {
         TextWatcher textWatcher = new ChipTextWatcher(layout, context, this, textColor, chipColor, newDrawable,
                 showDeleteButton, labelPosition, listTextWatcher, setText);
         focusedTextWatcher = textWatcher;
-        if(textSize > 0){
+        /*if(textSize > 0){
             autoCompleteTextView.setTextSize(textSize);
             ((ChipTextWatcher)textWatcher).setTextSize(textSize);
-        }
+        }*/
+        autoCompleteTextView.setTextSize(14);
+        ((ChipTextWatcher)textWatcher).setTextSize(14);
+//        ((ChipTextWatcher)textWatcher).setTextColor(Color.WHITE);
         autoCompleteTextView.addTextChangedListener(textWatcher);
         for (TextWatcher tw: listTextWatcher){
             autoCompleteTextView.addTextChangedListener(tw);
@@ -612,6 +623,7 @@ public class ChipLayout extends ViewGroup implements View.OnClickListener {
             @Override
             public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 autoCompleteTextView.setText(autoCompleteTextView.getText().toString() + ",");
+                autoCompleteTextView.setTextColor(Color.WHITE);
                 if(onItemClickListener != null){
                     onItemClickListener.onItemClick(arg0, arg1, arg2, arg3);
                 }
@@ -684,7 +696,8 @@ public class ChipLayout extends ViewGroup implements View.OnClickListener {
             if(autoCompleteTextView.isFocusable()){
                 autoCompleteTextView.requestFocus();
                 InputMethodManager inputMethodManager=(InputMethodManager)context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                inputMethodManager.toggleSoftInputFromWindow(autoCompleteTextView.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
+//                inputMethodManager.toggleSoftInputFromWindow(autoCompleteTextView.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
+                inputMethodManager.showSoftInput(autoCompleteTextView, InputMethodManager.SHOW_IMPLICIT);
             }else{
                 createNewChipLayout(null);
             }
