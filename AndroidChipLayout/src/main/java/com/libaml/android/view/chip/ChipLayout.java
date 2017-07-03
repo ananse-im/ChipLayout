@@ -475,6 +475,8 @@ public class ChipLayout extends ViewGroup implements View.OnClickListener {
         autoCompleteTextView.setHint(" ");
         autoCompleteTextView.setPadding(10,0,10,10);
         autoCompleteTextView.setSingleLine(true);
+        autoCompleteTextView.setThreshold(1);
+//        autoCompleteTextView.setThreshold(0);
 //        autoCompleteTextView.setTextColor(textColor);
         if (typeface != null) {
             autoCompleteTextView.setTypeface(typeface);
