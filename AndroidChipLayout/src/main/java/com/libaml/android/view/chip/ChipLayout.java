@@ -554,6 +554,7 @@ public class ChipLayout extends ViewGroup implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 String item = autoCompleteTextView.getText().toString();
+                if (item.isEmpty()) return;
                 getAdapter().addAll(item);
 
                 int pos = chipLayout.indexOfChild(layout);
