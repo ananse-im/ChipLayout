@@ -20,6 +20,10 @@ public class ChipEditorActionListener implements EditText.OnEditorActionListener
                 if (editText.getText() != null && editText.getText().toString().length() > 0){
                     editText.setText(editText.getText().toString()+",");
                 }
+            }else if ((event != null && (event.getKeyCode() == KeyEvent.KEYCODE_ENTER)) || (actionId == EditorInfo.IME_ACTION_DONE)) {
+                // Clear text & dismiss keyboard
+                editText.setText("");
+                return false;
             }
         }catch (Exception e){}
         return true;

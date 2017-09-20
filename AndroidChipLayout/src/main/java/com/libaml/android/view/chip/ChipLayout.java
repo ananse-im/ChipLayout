@@ -11,6 +11,9 @@ import android.graphics.Typeface;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
+import android.text.InputFilter;
+import android.text.InputType;
+import android.text.Spanned;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.util.DisplayMetrics;
@@ -476,6 +479,21 @@ public class ChipLayout extends ViewGroup implements View.OnClickListener {
         autoCompleteTextView.setPadding(10,0,10,10);
         autoCompleteTextView.setSingleLine(true);
         autoCompleteTextView.setThreshold(1);
+        autoCompleteTextView.setInputType(InputType.TYPE_TEXT_VARIATION_PASSWORD);
+        /* To restrict Space Bar in Keyboard */
+        InputFilter filter = new InputFilter() {
+            public CharSequence filter(CharSequence source, int start, int end,
+                                       Spanned dest, int dstart, int dend) {
+                for (int i = start; i < end; i++) {
+                    if (Character.isWhitespace(source.charAt(i))) {
+                        return "";
+                    }
+                }
+                return null;
+            }
+
+        };
+        autoCompleteTextView.setFilters(new InputFilter[] { filter });
 //        autoCompleteTextView.setThreshold(0);
 //        autoCompleteTextView.setTextColor(textColor);
         if (typeface != null) {
@@ -554,7 +572,8 @@ public class ChipLayout extends ViewGroup implements View.OnClickListener {
             @Override
             public void onClick(View v) {
                 String item = autoCompleteTextView.getText().toString();
-                if (item.isEmpty()) return;
+                if (item.isEmpty() || getAdapter().getCount() == 0) return;
+
                 getAdapter().addAll(item);
 
                 int pos = chipLayout.indexOfChild(layout);
